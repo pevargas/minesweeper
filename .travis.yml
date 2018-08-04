@@ -2,11 +2,9 @@ sudo: false
 language: java
 jdk: oraclejdk10
 cache:
-  directories:
-  - $HOME/.m2
+  directories: $HOME/.m2
 notifications:
   email: false
-install:
-  - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-script:
-  - mvn verify
+install: mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: mvn verify cobertura:cobertura
+after_success: bash <(curl -s https://codecov.io/bash)
