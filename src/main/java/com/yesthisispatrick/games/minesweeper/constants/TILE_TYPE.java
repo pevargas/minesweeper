@@ -19,12 +19,35 @@ public enum TILE_TYPE {
     this.value = value;
   }
 
+  /**
+   * Given a value, get the {@link TILE_TYPE}
+   * @param value the value of the tile
+   * @return the associated {@link TILE_TYPE} or {@link #EMPTY} if not found
+   */
+  public static TILE_TYPE getTileFromValue(String value) {
+    for (TILE_TYPE type : values()) {
+      if (type.getValue().equals(value)) {
+        return type;
+      }
+    }
+
+    return EMPTY;
+  }
+
+  /**
+   * Get the associated value
+   * @return the value
+   */
   public String getValue() {
     return value;
   }
 
+  /**
+   * Increment the tile to the next number
+   * @return the new tile type
+   */
   public TILE_TYPE increment() {
-    switch(this) {
+    switch (this) {
       case EMPTY:
         return ONE;
       case ONE:
@@ -44,16 +67,6 @@ public enum TILE_TYPE {
       default:
         return this;
     }
-  }
-
-  public static TILE_TYPE getTileFromValue(String value) {
-    for (TILE_TYPE type : values()) {
-      if (type.getValue().equals(value)) {
-        return type;
-      }
-    }
-
-    return EMPTY;
   }
 
   @Override

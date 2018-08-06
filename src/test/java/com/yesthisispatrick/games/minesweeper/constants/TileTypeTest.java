@@ -1,6 +1,6 @@
 package com.yesthisispatrick.games.minesweeper.constants;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 

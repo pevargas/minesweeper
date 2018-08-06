@@ -1,6 +1,9 @@
 package com.yesthisispatrick.games.minesweeper.models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import com.yesthisispatrick.games.minesweeper.constants.COMPASS;
 import com.yesthisispatrick.games.minesweeper.constants.TILE_TYPE;
@@ -83,7 +86,7 @@ public class BoardTest {
   @Test
   public void testGetTileValid() {
     Tile actual = new Board().init()
-        .getTile(Board.DEFAULT_HEIGHT/2, Board.DEFAULT_WIDTH/2);
+        .getTile(Board.DEFAULT_HEIGHT / 2, Board.DEFAULT_WIDTH / 2);
     assertNotNull(actual);
     assertTrue(actual.isHidden());
   }
@@ -125,12 +128,12 @@ public class BoardTest {
   @Test
   public void testIsNotOutOfBoundsCompass() {
     Board board = new Board().init();
-    assertFalse(board.isOutOfBounds(board.getWidth()*2 + 1, COMPASS.EAST));
-    assertFalse(board.isOutOfBounds(board.getWidth()*2 + 1, COMPASS.NORTHEAST));
-    assertFalse(board.isOutOfBounds(board.getWidth()*2 + 1, COMPASS.SOUTHEAST));
-    assertFalse(board.isOutOfBounds(board.getWidth()*2 - 1, COMPASS.WEST));
-    assertFalse(board.isOutOfBounds(board.getWidth()*2 - 1, COMPASS.NORTHWEST));
-    assertFalse(board.isOutOfBounds(board.getWidth()*2 - 1, COMPASS.SOUTHWEST));
+    assertFalse(board.isOutOfBounds(board.getWidth() * 2 + 1, COMPASS.EAST));
+    assertFalse(board.isOutOfBounds(board.getWidth() * 2 + 1, COMPASS.NORTHEAST));
+    assertFalse(board.isOutOfBounds(board.getWidth() * 2 + 1, COMPASS.SOUTHEAST));
+    assertFalse(board.isOutOfBounds(board.getWidth() * 2 - 1, COMPASS.WEST));
+    assertFalse(board.isOutOfBounds(board.getWidth() * 2 - 1, COMPASS.NORTHWEST));
+    assertFalse(board.isOutOfBounds(board.getWidth() * 2 - 1, COMPASS.SOUTHWEST));
     assertFalse(board.isOutOfBounds(board.getTotalTiles() - 1, COMPASS.NORTH));
     assertFalse(board.isOutOfBounds(0, COMPASS.SOUTH));
   }

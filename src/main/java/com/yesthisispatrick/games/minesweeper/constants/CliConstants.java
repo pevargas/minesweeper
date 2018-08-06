@@ -2,7 +2,7 @@ package com.yesthisispatrick.games.minesweeper.constants;
 
 public class CliConstants {
 
-  public static final String BOMB= "\n"
+  public static final String BOMB = "\n"
       + "                                     . . .\n"
       + "                                      \\|/\n"
       + "                                    `--+--'\n"

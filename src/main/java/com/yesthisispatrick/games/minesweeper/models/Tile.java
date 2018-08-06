@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tile {
+
   static final int DEFAULT_INDEX = -1;
   static final TILE_TYPE DEFAULT_TILE_TYPE = TILE_TYPE.EMPTY;
   private TILE_TYPE type = DEFAULT_TILE_TYPE;
@@ -19,6 +20,7 @@ public class Tile {
 
   /**
    * Use the {@link TileFactory} to get a new tile
+   *
    * @param index the position of the tile
    */
   private Tile(Integer index) {
@@ -27,6 +29,7 @@ public class Tile {
 
   /**
    * Use the {@link TileFactory} to get a new tile
+   *
    * @param index the position of the tile
    * @param type the type of the tile
    */
@@ -65,9 +68,9 @@ public class Tile {
   }
 
   public static class TileFactory {
-    private static List<Tile> tiles = new ArrayList<>();
-    static Long totalMines;
 
+    static Long totalMines;
+    private static List<Tile> tiles = new ArrayList<>();
 
     /**
      * Clear the {@link TileFactory} of previous {@link Tile}s.
@@ -78,6 +81,7 @@ public class Tile {
 
     /**
      * Make a {@link Tile}
+     *
      * @return a newly created {@link Tile}
      */
     public static Tile getTile() {
@@ -86,6 +90,7 @@ public class Tile {
 
     /**
      * Make a {@link Tile}
+     *
      * @param index the position of the {@link Tile}
      * @return a newly created {@link Tile}
      */
@@ -95,6 +100,7 @@ public class Tile {
 
     /**
      * Make a {@link Tile}
+     *
      * @param index the position of the {@link Tile}
      * @param type the {@link TILE_TYPE} of the {@link Tile}
      * @return a newly created {@link Tile}
@@ -124,6 +130,7 @@ public class Tile {
 
     /**
      * Get the number of {@link Tile}s of specific {@link TILE_TYPE}
+     *
      * @param type the {@link TILE_TYPE} to count by
      * @return the number of {@link Tile}s of specific {@link TILE_TYPE}
      */
@@ -133,6 +140,7 @@ public class Tile {
 
     /**
      * Get the total number of {@link Tile}s created.
+     *
      * @return the number of {@link Tile}s.
      */
     public static long getTotalTiles() {
@@ -141,6 +149,7 @@ public class Tile {
 
     /**
      * Get the total number of hidden {@link Tile}s
+     *
      * @return the number of hidden {@link Tile}s
      */
     public static long getTotalHidden() {
@@ -149,6 +158,7 @@ public class Tile {
 
     /**
      * Print a summary of all the tile types in the {@link TileFactory}
+     *
      * @return a summary
      */
     public static String printStatistics() {
@@ -157,7 +167,7 @@ public class Tile {
       builder.append("\nHidden:\t");
       builder.append(getTotalHidden());
       builder.append("\n");
-      for(TILE_TYPE type : TILE_TYPE.values()) {
+      for (TILE_TYPE type : TILE_TYPE.values()) {
         builder.append(type.toString());
         builder.append(" Tile:\t");
         builder.append(getTileTypeCount(type));

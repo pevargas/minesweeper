@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class CompassTest {
+
   @Test
   public void testSouth() {
     assertEquals(18, COMPASS.SOUTH.getPosition(8, 10));

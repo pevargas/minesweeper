@@ -2,7 +2,6 @@ package com.yesthisispatrick.games.minesweeper;
 
 import com.yesthisispatrick.games.minesweeper.constants.CliConstants;
 import com.yesthisispatrick.games.minesweeper.constants.GAME_STATUS;
-import com.yesthisispatrick.games.minesweeper.constants.TILE_TYPE;
 import com.yesthisispatrick.games.minesweeper.models.Board;
 import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
 import com.yesthisispatrick.games.minesweeper.services.Configuration;
@@ -11,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class App {
+
   public static final Logger logger = LoggerFactory.getLogger(App.class);
 
   public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class App {
     // Construct the board
     Board board = new Board(config).init();
 
-    if (config.isDebugMode()){
+    if (config.isDebugMode()) {
       System.out.println(board.printBoard(config.isDebugMode()));
       System.exit(0);
     }
@@ -40,7 +40,8 @@ public class App {
       String[] guess = System.console().readLine("Make Guess (<row> <column>): ").split(" ");
       Integer index = Integer.parseInt(guess[0]) * board.getWidth() + Integer.parseInt(guess[1]);
       status = board.clickTile(index);
-      if (GAME_STATUS.CONTINUE == status && TileFactory.getTotalMines() == TileFactory.getTotalHidden()){
+      if (GAME_STATUS.CONTINUE == status && TileFactory.getTotalMines() == TileFactory
+          .getTotalHidden()) {
         status = GAME_STATUS.GAME_OVER;
       }
     }

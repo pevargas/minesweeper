@@ -1,10 +1,10 @@
 package com.yesthisispatrick.games.minesweeper.models;
 
-import com.yesthisispatrick.games.minesweeper.constants.GAME_STATUS;
-import com.yesthisispatrick.games.minesweeper.services.Configuration;
-import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
 import com.yesthisispatrick.games.minesweeper.constants.COMPASS;
+import com.yesthisispatrick.games.minesweeper.constants.GAME_STATUS;
 import com.yesthisispatrick.games.minesweeper.constants.TILE_TYPE;
+import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
+import com.yesthisispatrick.games.minesweeper.services.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Board {
+
   public static final Logger logger = LoggerFactory.getLogger(Board.class);
 
   public static final Integer DEFAULT_WIDTH = 10;
@@ -36,6 +37,7 @@ public class Board {
 
   /**
    * Construct a {@link Board} using the {@link Configuration} object
+   *
    * @param config the cli arguments
    */
   public Board(Configuration config) {
@@ -44,6 +46,7 @@ public class Board {
 
   /**
    * Construct a board from a predefined String
+   *
    * @param board a {@link String} representation of the {@link Board}
    * @param width the width of the {@link Board}
    */
@@ -66,6 +69,7 @@ public class Board {
 
   /**
    * Construct a {@link Board}
+   *
    * @param height the number of rows
    * @param width the number of columns
    * @param mineFrequency how frequent mines should be
@@ -82,7 +86,9 @@ public class Board {
     if (null == this.mineFrequency) {
       throw new IllegalArgumentException("Unable to construct board without a mine frequency");
     } else if (this.mineFrequency < 0 || 1 < this.mineFrequency) {
-      throw new IllegalArgumentException("Mine frequency must be a decimal value between 0 and 1 exclusive; Was " + this.mineFrequency);
+      throw new IllegalArgumentException(
+          "Mine frequency must be a decimal value between 0 and 1 exclusive; Was "
+              + this.mineFrequency);
     }
 
     this.totalTiles = this.height * this.width;
@@ -90,6 +96,7 @@ public class Board {
 
   /**
    * Get the height of the board
+   *
    * @return the height
    */
   public int getHeight() {
@@ -98,6 +105,7 @@ public class Board {
 
   /**
    * Get the width of the board
+   *
    * @return the width
    */
   public int getWidth() {
@@ -106,6 +114,7 @@ public class Board {
 
   /**
    * Get the total number of {@link Tile}s in the board
+   *
    * @return the total {@link Tile}s
    */
   public int getTotalTiles() {
@@ -114,6 +123,7 @@ public class Board {
 
   /**
    * Get the frequency of the {@link TILE_TYPE#MINE}s. Will be a decimal between 0 and 1.
+   *
    * @return the {@link TILE_TYPE#MINE} frequency
    */
   public double getMineFrequency() {
@@ -122,6 +132,7 @@ public class Board {
 
   /**
    * Get a tile at the position
+   *
    * @param row the row to look in
    * @param column the column to look in
    * @return the {@link Tile}
@@ -133,11 +144,12 @@ public class Board {
       throw new IndexOutOfBoundsException("Unable to get Tile beyond the borders of the Board");
     }
 
-    return board.get(row*width + column);
+    return board.get(row * width + column);
   }
 
   /**
    * Initialize the board with the {@link #mineFrequency} in mind
+   *
    * @return this {@link Board}
    */
   public Board init() {
@@ -171,6 +183,7 @@ public class Board {
 
   /**
    * Add the numbers to the board
+   *
    * @return the {@link Board}
    */
   private Board addNumbers() {
@@ -204,6 +217,7 @@ public class Board {
 
   /**
    * Click a tile
+   *
    * @param index the index of the {@link Tile} to click
    * @return a {@link GAME_STATUS} status
    */
@@ -215,7 +229,7 @@ public class Board {
     Tile tile = null;
     try {
       tile = board.get(index);
-    } catch (IndexOutOfBoundsException ex){
+    } catch (IndexOutOfBoundsException ex) {
       logger.warn(String.format("Index out of bounds: %s", index));
       return GAME_STATUS.CONTINUE;
     }
@@ -236,7 +250,7 @@ public class Board {
             if (TILE_TYPE.MINE != neighborType) {
               clickTile(dir.getPosition(index, width));
             }
-          } catch (IndexOutOfBoundsException ex){
+          } catch (IndexOutOfBoundsException ex) {
             logger.warn(String.format("Index out of bounds: %s, %s", index, dir));
             continue;
           }
@@ -249,6 +263,7 @@ public class Board {
 
   /**
    * Check if an index is out of bounds
+   *
    * @param index the index to check
    * @return a {@link boolean}
    */
@@ -269,6 +284,7 @@ public class Board {
 
   /**
    * Pre-Check if an index is out of bounds
+   *
    * @param index the index to check
    * @param dir the direction of the neighbor
    * @return a {@link boolean}
@@ -285,6 +301,7 @@ public class Board {
 
   /**
    * Get a textual representation of the board
+   *
    * @return the {@link Board}
    */
   public String printBoard() {
@@ -293,12 +310,13 @@ public class Board {
 
   /**
    * Get a textual representation of the board
+   *
    * @param debug if we're not worrying about it being hidden
    * @return the {@link Board}
    */
   public String printBoard(Boolean debug) {
     StringBuilder builder = new StringBuilder();
-    for(int index = 0; index < totalTiles; index++) {
+    for (int index = 0; index < totalTiles; index++) {
       if (index != 0 && index % width == 0) {
         builder.append("\n");
       }
