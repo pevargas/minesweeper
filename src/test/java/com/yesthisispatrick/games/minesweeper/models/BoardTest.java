@@ -87,4 +87,51 @@ public class BoardTest {
     assertNotNull(actual);
     assertTrue(actual.isHidden());
   }
+
+  @Test
+  public void testClickTile() {
+    Board board = new Board(TEST_BOARD, TEST_WIDTH);
+    assertEquals(100, TileFactory.getTotalHidden());
+    board.clickTile(54);
+    assertEquals(99, TileFactory.getTotalHidden());
+  }
+
+  @Test
+  public void testIsOutOfBoundsIndex() {
+    Board board = new Board().init();
+    assertTrue(board.isOutOfBounds(-1));
+    assertTrue(board.isOutOfBounds(board.getTotalTiles() + 1));
+  }
+
+  @Test
+  public void testIsNotOutOfBoundsIndex() {
+    Board board = new Board().init();
+    assertFalse(board.isOutOfBounds(board.getWidth()));
+  }
+
+  @Test
+  public void testIsOutOfBoundsCompass() {
+    Board board = new Board().init();
+    assertTrue(board.isOutOfBounds(board.getWidth() - 1, COMPASS.EAST));
+    assertTrue(board.isOutOfBounds(board.getWidth() - 1, COMPASS.NORTHEAST));
+    assertTrue(board.isOutOfBounds(board.getWidth() - 1, COMPASS.SOUTHEAST));
+    assertTrue(board.isOutOfBounds(0, COMPASS.WEST));
+    assertTrue(board.isOutOfBounds(0, COMPASS.NORTHWEST));
+    assertTrue(board.isOutOfBounds(0, COMPASS.SOUTHWEST));
+    assertTrue(board.isOutOfBounds(0, COMPASS.NORTH));
+    assertTrue(board.isOutOfBounds(board.getTotalTiles() - 1, COMPASS.SOUTH));
+  }
+
+  @Test
+  public void testIsNotOutOfBoundsCompass() {
+    Board board = new Board().init();
+    assertFalse(board.isOutOfBounds(board.getWidth()*2 + 1, COMPASS.EAST));
+    assertFalse(board.isOutOfBounds(board.getWidth()*2 + 1, COMPASS.NORTHEAST));
+    assertFalse(board.isOutOfBounds(board.getWidth()*2 + 1, COMPASS.SOUTHEAST));
+    assertFalse(board.isOutOfBounds(board.getWidth()*2 - 1, COMPASS.WEST));
+    assertFalse(board.isOutOfBounds(board.getWidth()*2 - 1, COMPASS.NORTHWEST));
+    assertFalse(board.isOutOfBounds(board.getWidth()*2 - 1, COMPASS.SOUTHWEST));
+    assertFalse(board.isOutOfBounds(board.getTotalTiles() - 1, COMPASS.NORTH));
+    assertFalse(board.isOutOfBounds(0, COMPASS.SOUTH));
+  }
 }

@@ -1,5 +1,6 @@
 package com.yesthisispatrick.games.minesweeper.models;
 
+import com.yesthisispatrick.games.minesweeper.constants.GAME_STATUS;
 import com.yesthisispatrick.games.minesweeper.services.Configuration;
 import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
 import com.yesthisispatrick.games.minesweeper.constants.COMPASS;
@@ -196,6 +197,93 @@ public class Board {
       }
     });
     return this;
+  }
+
+  /**
+   * Click a tile
+   * @param index the index of the {@link Tile} to click
+   * @return a {@link GAME_STATUS} status
+   */
+  public GAME_STATUS clickTile(Integer index) {
+    if (isOutOfBounds(index)) {
+      return GAME_STATUS.CONTINUE;
+    }
+
+    Tile tile = board.get(index);
+    if (TILE_TYPE.MINE == tile.getType()) {
+      return GAME_STATUS.GAME_OVER;
+    }
+
+    if (tile.isHidden()) {
+      tile.unHide();
+      if (TILE_TYPE.EMPTY == tile.getType()) {
+        for (COMPASS dir : COMPASS.values()) {
+          if (isOutOfBounds(index, dir)) {
+            continue;
+          }
+
+          TILE_TYPE neighborType = board.get(dir.getPosition(index, width)).getType();
+          if (TILE_TYPE.MINE != neighborType) {
+            clickTile(dir.getPosition(index, width));
+          }
+        }
+      }
+    }
+
+    return GAME_STATUS.CONTINUE;
+  }
+
+  /**
+   * Check if an index is out of bounds
+   * @param index the index to check
+   * @return a {@link boolean}
+   */
+  boolean isOutOfBounds(Integer index) {
+    return index < 0 || totalTiles < index;
+  }
+
+  /**
+   * Pre-Check if an index is out of bounds
+   * @param index the index to check
+   * @param dir the direction of the neighbor
+   * @return a {@link boolean}
+   */
+  boolean isOutOfBounds(Integer index, COMPASS dir) {
+    if (isOutOfBounds(index)) {
+      return true;
+    }
+
+    Boolean isOutOfBounds = false;
+    switch (dir) {
+      case NORTH:
+        if (index < width) {
+          isOutOfBounds = true;
+        }
+        break;
+      case WEST:
+      case NORTHWEST:
+      case SOUTHWEST:
+        if ((index % width) == 0) {
+          isOutOfBounds = true;
+        }
+        break;
+      case EAST:
+      case NORTHEAST:
+      case SOUTHEAST:
+        if ((index % width) == (width - 1)) {
+          isOutOfBounds = true;
+        }
+        break;
+      case SOUTH:
+        if (index > (width * (height - 1))) {
+          isOutOfBounds = true;
+        }
+        break;
+      default:
+        isOutOfBounds = false;
+    }
+
+    return isOutOfBounds;
   }
 
   /**
