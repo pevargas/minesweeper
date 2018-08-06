@@ -66,6 +66,8 @@ public class Tile {
 
   public static class TileFactory {
     private static List<Tile> tiles = new ArrayList<>();
+    static Long totalMines;
+
 
     /**
      * Clear the {@link TileFactory} of previous {@link Tile}s.
@@ -113,6 +115,13 @@ public class Tile {
       return tile;
     }
 
+    public static Long getTotalMines() {
+      if (totalMines == null) {
+        totalMines = getTileTypeCount(TILE_TYPE.MINE);
+      }
+      return totalMines;
+    }
+
     /**
      * Get the number of {@link Tile}s of specific {@link TILE_TYPE}
      * @param type the {@link TILE_TYPE} to count by
@@ -145,6 +154,8 @@ public class Tile {
     public static String printStatistics() {
       StringBuilder builder = new StringBuilder("Total:\t");
       builder.append(getTotalTiles());
+      builder.append("\nHidden:\t");
+      builder.append(getTotalHidden());
       builder.append("\n");
       for(TILE_TYPE type : TILE_TYPE.values()) {
         builder.append(type.toString());
