@@ -1,10 +1,11 @@
 package com.yesthisispatrick.games.minesweeper.models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import com.yesthisispatrick.games.minesweeper.models.Tile;
+import com.yesthisispatrick.games.minesweeper.constants.TILE_TYPE;
 import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
-import com.yesthisispatrick.games.minesweeper.enums.TILE_TYPE;
 import org.junit.Before;
 import org.junit.Test;
 

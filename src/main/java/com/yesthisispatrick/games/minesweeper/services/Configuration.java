@@ -23,6 +23,7 @@ public class Configuration {
 
   /**
    * Figure out what was passed into us
+   *
    * @param args the command line arguments
    */
   public Configuration(String[] args) {
@@ -32,6 +33,7 @@ public class Configuration {
 
   /**
    * Get the provided width
+   *
    * @return the width of the board to make
    */
   public int getWidth() {
@@ -40,6 +42,7 @@ public class Configuration {
 
   /**
    * Get the provided height
+   *
    * @return the height of the board to make
    */
   public int getHeight() {
@@ -48,6 +51,7 @@ public class Configuration {
 
   /**
    * Get the provided mine frequency
+   *
    * @return the mine frequency of the board to make
    */
   public double getMineFrequency() {
@@ -56,6 +60,7 @@ public class Configuration {
 
   /**
    * If we should run in debug mode or not
+   *
    * @return a {@link boolean}
    */
   public boolean isDebugMode() {
@@ -64,6 +69,7 @@ public class Configuration {
 
   /**
    * Parses the arguments passed in
+   *
    * @param args the arguments passed in
    */
   private void parseOptions(String[] args) {
@@ -98,9 +104,10 @@ public class Configuration {
    */
   private void setOptions() {
     options.addOption("h", "help", false, "show help");
-    options.addOption("w" , "width", true, "the width of the board");
+    options.addOption("w", "width", true, "the width of the board");
     options.addOption("g", "height", true, "the height of the board");
-    options.addOption("f", "mine-frequency", true, "the frequency of the mines (between 0 and 1 as a decimal)");
+    options.addOption("f", "mine-frequency", true,
+        "the frequency of the mines (between 0 and 1 as a decimal)");
     options.addOption("d", "debug-mode", false, "if we should run in debug mode");
   }
 

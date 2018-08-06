@@ -1,12 +1,14 @@
 package com.yesthisispatrick.games.minesweeper.models;
 
-import com.yesthisispatrick.games.minesweeper.enums.TILE_TYPE;
+import com.yesthisispatrick.games.minesweeper.constants.TILE_TYPE;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tile {
+
   static final int DEFAULT_INDEX = -1;
-  private TILE_TYPE type = TILE_TYPE.EMPTY;
+  static final TILE_TYPE DEFAULT_TILE_TYPE = TILE_TYPE.EMPTY;
+  private TILE_TYPE type = DEFAULT_TILE_TYPE;
   private Boolean isHidden = true;
   private Integer index = DEFAULT_INDEX;
 
@@ -18,10 +20,22 @@ public class Tile {
 
   /**
    * Use the {@link TileFactory} to get a new tile
+   *
    * @param index the position of the tile
    */
   private Tile(Integer index) {
     this.index = index;
+  }
+
+  /**
+   * Use the {@link TileFactory} to get a new tile
+   *
+   * @param index the position of the tile
+   * @param type the type of the tile
+   */
+  private Tile(Integer index, TILE_TYPE type) {
+    this.index = index;
+    this.type = type;
   }
 
   TILE_TYPE getType() {
@@ -54,6 +68,8 @@ public class Tile {
   }
 
   public static class TileFactory {
+
+    static Long totalMines;
     private static List<Tile> tiles = new ArrayList<>();
 
     /**
@@ -65,6 +81,7 @@ public class Tile {
 
     /**
      * Make a {@link Tile}
+     *
      * @return a newly created {@link Tile}
      */
     public static Tile getTile() {
@@ -73,21 +90,47 @@ public class Tile {
 
     /**
      * Make a {@link Tile}
+     *
      * @param index the position of the {@link Tile}
      * @return a newly created {@link Tile}
      */
     public static Tile getTile(Integer index) {
+      return getTile(index, DEFAULT_TILE_TYPE);
+    }
+
+    /**
+     * Make a {@link Tile}
+     *
+     * @param index the position of the {@link Tile}
+     * @param type the {@link TILE_TYPE} of the {@link Tile}
+     * @return a newly created {@link Tile}
+     */
+    public static Tile getTile(Integer index, TILE_TYPE type) {
       Integer cleanedIndex = index;
       if (null == cleanedIndex) {
         cleanedIndex = DEFAULT_INDEX;
       }
-      Tile tile = new Tile(cleanedIndex);
+
+      TILE_TYPE cleanedType = type;
+      if (null == cleanedType) {
+        cleanedType = DEFAULT_TILE_TYPE;
+      }
+
+      Tile tile = new Tile(cleanedIndex, cleanedType);
       tiles.add(tile);
       return tile;
     }
 
+    public static Long getTotalMines() {
+      if (totalMines == null) {
+        totalMines = getTileTypeCount(TILE_TYPE.MINE);
+      }
+      return totalMines;
+    }
+
     /**
      * Get the number of {@link Tile}s of specific {@link TILE_TYPE}
+     *
      * @param type the {@link TILE_TYPE} to count by
      * @return the number of {@link Tile}s of specific {@link TILE_TYPE}
      */
@@ -97,6 +140,7 @@ public class Tile {
 
     /**
      * Get the total number of {@link Tile}s created.
+     *
      * @return the number of {@link Tile}s.
      */
     public static long getTotalTiles() {
@@ -105,6 +149,7 @@ public class Tile {
 
     /**
      * Get the total number of hidden {@link Tile}s
+     *
      * @return the number of hidden {@link Tile}s
      */
     public static long getTotalHidden() {
@@ -113,13 +158,16 @@ public class Tile {
 
     /**
      * Print a summary of all the tile types in the {@link TileFactory}
+     *
      * @return a summary
      */
     public static String printStatistics() {
       StringBuilder builder = new StringBuilder("Total:\t");
       builder.append(getTotalTiles());
+      builder.append("\nHidden:\t");
+      builder.append(getTotalHidden());
       builder.append("\n");
-      for(TILE_TYPE type : TILE_TYPE.values()) {
+      for (TILE_TYPE type : TILE_TYPE.values()) {
         builder.append(type.toString());
         builder.append(" Tile:\t");
         builder.append(getTileTypeCount(type));
