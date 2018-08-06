@@ -4,13 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tile {
+  static final int DEFAULT_INDEX = -1;
   private TILE_TYPE type = TILE_TYPE.EMPTY;
   private Boolean isHidden = true;
+  private Integer index = DEFAULT_INDEX;
 
   /**
    * Use the {@link TileFactory} to get a new tile
    */
   private Tile() {
+  }
+
+  /**
+   * Use the {@link TileFactory} to get a new tile
+   * @param index the position of the tile
+   */
+  private Tile(Integer index) {
+    this.index = index;
   }
 
   TILE_TYPE getType() {
@@ -21,7 +31,7 @@ public class Tile {
     this.type = type;
   }
 
-  public Boolean isHidden() {
+  public boolean isHidden() {
     return isHidden;
   }
 
@@ -29,9 +39,17 @@ public class Tile {
     isHidden = false;
   }
 
+  public int getIndex() {
+    return index;
+  }
+
   @Override
   public String toString() {
-    return isHidden ? TILE_TYPE.HIDDEN_VALUE : type.toString();
+    return toString(false);
+  }
+
+  public String toString(Boolean debug) {
+    return (!debug && isHidden) ? TILE_TYPE.HIDDEN_VALUE : type.toString();
   }
 
   static class TileFactory {
@@ -49,7 +67,20 @@ public class Tile {
      * @return a newly created {@link Tile}
      */
     static Tile getTile() {
-      Tile tile = new Tile();
+      return getTile(DEFAULT_INDEX);
+    }
+
+    /**
+     * Make a {@link Tile}
+     * @param index the position of the {@link Tile}
+     * @return a newly created {@link Tile}
+     */
+    static Tile getTile(Integer index) {
+      Integer cleanedIndex = index;
+      if (null == cleanedIndex) {
+        cleanedIndex = DEFAULT_INDEX;
+      }
+      Tile tile = new Tile(cleanedIndex);
       tiles.add(tile);
       return tile;
     }

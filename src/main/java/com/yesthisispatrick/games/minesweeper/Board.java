@@ -4,12 +4,16 @@ import com.yesthisispatrick.games.minesweeper.Tile.TileFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Board {
 
   static final Integer DEFAULT_WIDTH = 10;
   static final Integer DEFAULT_HEIGHT = 10;
   static final Double DEFAULT_MINE_FREQUENCY = 0.10;
+  private static final int MAXIMUM_TRIES = 10;
+  private static int INIT_TRIES = 0;
+
   private Integer height;
   private Integer width;
   private Integer totalTiles;
@@ -21,6 +25,14 @@ public class Board {
    */
   public Board() {
     this(DEFAULT_HEIGHT, DEFAULT_WIDTH, DEFAULT_MINE_FREQUENCY);
+  }
+
+  /**
+   * Construct a {@link Board} using the {@link Configuration} object
+   * @param config the cli arguments
+   */
+  public Board(Configuration config) {
+    this(config.getHeight(), config.getWidth(), config.getMineFrequency());
   }
 
   /**
@@ -104,12 +116,60 @@ public class Board {
     board = new ArrayList<>(totalTiles);
     Random random = new Random();
     for (int index = 0; index < totalTiles; index++) {
-      Tile tile = TileFactory.getTile();
+      Tile tile = TileFactory.getTile(index);
       if (random.nextDouble() <= mineFrequency) {
         tile.setType(TILE_TYPE.MINE);
       }
       board.add(tile);
     }
+
+    // Add the numbers to the board
+    addNumbers();
+
+    // Make sure we have a reasonable board
+    if (0 == TileFactory.getTileTypeCount(TILE_TYPE.MINE)) {
+      if (INIT_TRIES < MAXIMUM_TRIES) {
+        ++INIT_TRIES;
+        init();
+      } else {
+        throw new IllegalArgumentException(
+            "Unable to create a reasonable board with the arguments provided");
+      }
+    }
+
+    return this;
+  }
+
+  /**
+   * Add the numbers to the board
+   * @return the {@link Board}
+   */
+  private Board addNumbers() {
+    List<Integer> mines = board.stream()
+        .filter(tile -> TILE_TYPE.MINE.equals(tile.getType()))
+        .map(Tile::getIndex)
+        .collect(Collectors.toList());
+
+    mines.forEach(mine -> {
+      for (COMPASS dir : COMPASS.values()) {
+        // Boundary Checks
+        if ((COMPASS.WEST == dir || COMPASS.NORTHWEST == dir || COMPASS.SOUTHWEST == dir)
+            && ((mine % width) == 0)) {
+          continue;
+        }
+        if ((COMPASS.EAST == dir || COMPASS.NORTHEAST == dir || COMPASS.SOUTHEAST == dir)
+            && ((mine % width) == (width - 1))) {
+          continue;
+        }
+
+        // Get new index
+        Integer index = dir.getPosition(mine, width);
+        if (0 < index && index < totalTiles) {
+          Tile tile = board.get(index);
+          tile.setType(tile.getType().increment());
+        }
+      }
+    });
     return this;
   }
 
@@ -118,12 +178,21 @@ public class Board {
    * @return the {@link Board}
    */
   public String printBoard() {
+    return printBoard(false);
+  }
+
+  /**
+   * Get a textual representation of the board
+   * @param debug if we're not worrying about it being hidden
+   * @return the {@link Board}
+   */
+  public String printBoard(Boolean debug) {
     StringBuilder builder = new StringBuilder();
     for(int index = 0; index < totalTiles; index++) {
       if (index != 0 && index % width == 0) {
         builder.append("\n");
       }
-      builder.append(board.get(index).toString());
+      builder.append(board.get(index).toString(debug));
     }
 
     return builder.toString();
