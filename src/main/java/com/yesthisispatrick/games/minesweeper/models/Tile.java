@@ -1,5 +1,6 @@
-package com.yesthisispatrick.games.minesweeper;
+package com.yesthisispatrick.games.minesweeper.models;
 
+import com.yesthisispatrick.games.minesweeper.enums.TILE_TYPE;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,13 +53,13 @@ public class Tile {
     return (!debug && isHidden) ? TILE_TYPE.HIDDEN_VALUE : type.toString();
   }
 
-  static class TileFactory {
+  public static class TileFactory {
     private static List<Tile> tiles = new ArrayList<>();
 
     /**
      * Clear the {@link TileFactory} of previous {@link Tile}s.
      */
-    static void flush() {
+    public static void flush() {
       tiles = new ArrayList<>();
     }
 
@@ -66,7 +67,7 @@ public class Tile {
      * Make a {@link Tile}
      * @return a newly created {@link Tile}
      */
-    static Tile getTile() {
+    public static Tile getTile() {
       return getTile(DEFAULT_INDEX);
     }
 
@@ -75,7 +76,7 @@ public class Tile {
      * @param index the position of the {@link Tile}
      * @return a newly created {@link Tile}
      */
-    static Tile getTile(Integer index) {
+    public static Tile getTile(Integer index) {
       Integer cleanedIndex = index;
       if (null == cleanedIndex) {
         cleanedIndex = DEFAULT_INDEX;
@@ -90,7 +91,7 @@ public class Tile {
      * @param type the {@link TILE_TYPE} to count by
      * @return the number of {@link Tile}s of specific {@link TILE_TYPE}
      */
-    static long getTileTypeCount(TILE_TYPE type) {
+    public static long getTileTypeCount(TILE_TYPE type) {
       return tiles.stream().map(Tile::getType).filter(type::equals).count();
     }
 
@@ -98,7 +99,7 @@ public class Tile {
      * Get the total number of {@link Tile}s created.
      * @return the number of {@link Tile}s.
      */
-    static long getTotalTiles() {
+    public static long getTotalTiles() {
       return tiles.size();
     }
 
@@ -106,7 +107,7 @@ public class Tile {
      * Get the total number of hidden {@link Tile}s
      * @return the number of hidden {@link Tile}s
      */
-    static long getTotalHidden() {
+    public static long getTotalHidden() {
       return tiles.stream().filter(Tile::isHidden).count();
     }
 
@@ -114,7 +115,7 @@ public class Tile {
      * Print a summary of all the tile types in the {@link TileFactory}
      * @return a summary
      */
-    static String printStatistics() {
+    public static String printStatistics() {
       StringBuilder builder = new StringBuilder("Total:\t");
       builder.append(getTotalTiles());
       builder.append("\n");

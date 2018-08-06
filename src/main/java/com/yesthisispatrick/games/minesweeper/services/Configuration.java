@@ -1,5 +1,6 @@
-package com.yesthisispatrick.games.minesweeper;
+package com.yesthisispatrick.games.minesweeper.services;
 
+import com.yesthisispatrick.games.minesweeper.models.Board;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -24,7 +25,7 @@ public class Configuration {
    * Figure out what was passed into us
    * @param args the command line arguments
    */
-  Configuration(String[] args) {
+  public Configuration(String[] args) {
     setOptions();
     parseOptions(args);
   }

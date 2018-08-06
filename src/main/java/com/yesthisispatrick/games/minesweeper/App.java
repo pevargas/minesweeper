@@ -1,6 +1,8 @@
 package com.yesthisispatrick.games.minesweeper;
 
-import com.yesthisispatrick.games.minesweeper.Tile.TileFactory;
+import com.yesthisispatrick.games.minesweeper.models.Board;
+import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
+import com.yesthisispatrick.games.minesweeper.services.Configuration;
 
 public class App {
   public static void main(String[] args) {

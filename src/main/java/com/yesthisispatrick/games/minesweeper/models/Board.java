@@ -1,6 +1,9 @@
-package com.yesthisispatrick.games.minesweeper;
+package com.yesthisispatrick.games.minesweeper.models;
 
-import com.yesthisispatrick.games.minesweeper.Tile.TileFactory;
+import com.yesthisispatrick.games.minesweeper.services.Configuration;
+import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
+import com.yesthisispatrick.games.minesweeper.enums.COMPASS;
+import com.yesthisispatrick.games.minesweeper.enums.TILE_TYPE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class Board {
 
-  static final Integer DEFAULT_WIDTH = 10;
-  static final Integer DEFAULT_HEIGHT = 10;
-  static final Double DEFAULT_MINE_FREQUENCY = 0.10;
+  public static final Integer DEFAULT_WIDTH = 10;
+  public static final Integer DEFAULT_HEIGHT = 10;
+  public static final Double DEFAULT_MINE_FREQUENCY = 0.10;
   private static final int MAXIMUM_TRIES = 10;
   private static int INIT_TRIES = 0;
 
