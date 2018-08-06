@@ -6,7 +6,8 @@ import java.util.List;
 
 public class Tile {
   static final int DEFAULT_INDEX = -1;
-  private TILE_TYPE type = TILE_TYPE.EMPTY;
+  static final TILE_TYPE DEFAULT_TILE_TYPE = TILE_TYPE.EMPTY;
+  private TILE_TYPE type = DEFAULT_TILE_TYPE;
   private Boolean isHidden = true;
   private Integer index = DEFAULT_INDEX;
 
@@ -22,6 +23,16 @@ public class Tile {
    */
   private Tile(Integer index) {
     this.index = index;
+  }
+
+  /**
+   * Use the {@link TileFactory} to get a new tile
+   * @param index the position of the tile
+   * @param type the type of the tile
+   */
+  private Tile(Integer index, TILE_TYPE type) {
+    this.index = index;
+    this.type = type;
   }
 
   TILE_TYPE getType() {
@@ -77,11 +88,27 @@ public class Tile {
      * @return a newly created {@link Tile}
      */
     public static Tile getTile(Integer index) {
+      return getTile(index, DEFAULT_TILE_TYPE);
+    }
+
+    /**
+     * Make a {@link Tile}
+     * @param index the position of the {@link Tile}
+     * @param type the {@link TILE_TYPE} of the {@link Tile}
+     * @return a newly created {@link Tile}
+     */
+    public static Tile getTile(Integer index, TILE_TYPE type) {
       Integer cleanedIndex = index;
       if (null == cleanedIndex) {
         cleanedIndex = DEFAULT_INDEX;
       }
-      Tile tile = new Tile(cleanedIndex);
+
+      TILE_TYPE cleanedType = type;
+      if (null == cleanedType) {
+        cleanedType = DEFAULT_TILE_TYPE;
+      }
+
+      Tile tile = new Tile(cleanedIndex, cleanedType);
       tiles.add(tile);
       return tile;
     }
