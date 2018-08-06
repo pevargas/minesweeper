@@ -10,6 +10,19 @@ mvn clean install
 Run the Jar
 ```bash
 java -jar target\minesweeper-1.0-SNAPSHOT.jar
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+OOOOOOOOOO
+Total Mines:    10
+Spaces Left:    100
+Make Guess (<row> <column>):
 ```
 
 Get help
@@ -37,6 +50,5 @@ java -jar target\minesweeper-1.0-SNAPSHOT.jar -d -w 10 -g 10 -f 0.025
 ......111.
 ..........
 ..........
-```
 ```
 
