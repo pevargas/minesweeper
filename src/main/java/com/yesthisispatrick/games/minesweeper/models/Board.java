@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Board {
+  public static final Logger logger = LoggerFactory.getLogger(Board.class);
 
   public static final Integer DEFAULT_WIDTH = 10;
   public static final Integer DEFAULT_HEIGHT = 10;
@@ -209,7 +212,14 @@ public class Board {
       return GAME_STATUS.CONTINUE;
     }
 
-    Tile tile = board.get(index);
+    Tile tile = null;
+    try {
+      tile = board.get(index);
+    } catch (IndexOutOfBoundsException ex){
+      logger.warn(String.format("Index out of bounds: %s", index));
+      return GAME_STATUS.CONTINUE;
+    }
+
     if (TILE_TYPE.MINE == tile.getType()) {
       return GAME_STATUS.GAME_OVER;
     }
@@ -221,10 +231,14 @@ public class Board {
           if (isOutOfBounds(index, dir)) {
             continue;
           }
-
-          TILE_TYPE neighborType = board.get(dir.getPosition(index, width)).getType();
-          if (TILE_TYPE.MINE != neighborType) {
-            clickTile(dir.getPosition(index, width));
+          try {
+            TILE_TYPE neighborType = board.get(dir.getPosition(index, width)).getType();
+            if (TILE_TYPE.MINE != neighborType) {
+              clickTile(dir.getPosition(index, width));
+            }
+          } catch (IndexOutOfBoundsException ex){
+            logger.warn(String.format("Index out of bounds: %s, %s", index, dir));
+            continue;
           }
         }
       }
@@ -239,7 +253,18 @@ public class Board {
    * @return a {@link boolean}
    */
   boolean isOutOfBounds(Integer index) {
-    return index < 0 || totalTiles < index;
+    if (index < 0 || totalTiles < index) {
+      return true;
+    }
+    Integer row = index / width;
+    Integer col = index % height;
+    return isOutOfBounds(row, col);
+  }
+
+  boolean isOutOfBounds(Integer row, Integer col) {
+    Boolean rowOOB = (row < 0 || width <= row);
+    Boolean colOOB = (col < 0 || height <= col);
+    return rowOOB || colOOB;
   }
 
   /**
@@ -253,37 +278,9 @@ public class Board {
       return true;
     }
 
-    Boolean isOutOfBounds = false;
-    switch (dir) {
-      case NORTH:
-        if (index < width) {
-          isOutOfBounds = true;
-        }
-        break;
-      case WEST:
-      case NORTHWEST:
-      case SOUTHWEST:
-        if ((index % width) == 0) {
-          isOutOfBounds = true;
-        }
-        break;
-      case EAST:
-      case NORTHEAST:
-      case SOUTHEAST:
-        if ((index % width) == (width - 1)) {
-          isOutOfBounds = true;
-        }
-        break;
-      case SOUTH:
-        if (index > (width * (height - 1))) {
-          isOutOfBounds = true;
-        }
-        break;
-      default:
-        isOutOfBounds = false;
-    }
-
-    return isOutOfBounds;
+    Integer row = index / width;
+    Integer col = index % height;
+    return isOutOfBounds(dir.getRow(row), dir.getColumn(col));
   }
 
   /**
