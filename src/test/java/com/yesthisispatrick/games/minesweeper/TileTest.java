@@ -18,6 +18,7 @@ public class TileTest {
     Tile actual = TileFactory.getTile();
     assertTrue(actual.isHidden());
     assertEquals(TILE_TYPE.EMPTY, actual.getType());
+    assertEquals(Tile.DEFAULT_INDEX, actual.getIndex());
   }
 
   @Test

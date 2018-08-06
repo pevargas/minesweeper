@@ -23,6 +23,7 @@ public class TileFactoryTest {
     Tile actual = TileFactory.getTile();
     assertEquals(1, TileFactory.getTotalTiles());
     assertEquals(TILE_TYPE.EMPTY, actual.getType());
+    assertEquals(Tile.DEFAULT_INDEX, actual.getIndex());
     assertTrue(actual.isHidden());
   }
 
