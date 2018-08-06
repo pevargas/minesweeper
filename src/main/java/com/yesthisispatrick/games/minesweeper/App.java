@@ -35,10 +35,14 @@ public class App {
     while (GAME_STATUS.GAME_OVER != status) {
       System.out.println(CliConstants.BOMB);
       System.out.println(board.printBoard());
-      System.out.println("Total Mines: " + TileFactory.getTotalMines());
+      System.out.println("Total Mines:\t" + TileFactory.getTotalMines());
+      System.out.println("Spaces Left:\t" + TileFactory.getTotalHidden());
       String[] guess = System.console().readLine("Make Guess (<row> <column>): ").split(" ");
       Integer index = Integer.parseInt(guess[0]) * board.getWidth() + Integer.parseInt(guess[1]);
       status = board.clickTile(index);
+      if (GAME_STATUS.CONTINUE == status && TileFactory.getTotalMines() == TileFactory.getTotalHidden()){
+        status = GAME_STATUS.GAME_OVER;
+      }
     }
 
     // Winner!
