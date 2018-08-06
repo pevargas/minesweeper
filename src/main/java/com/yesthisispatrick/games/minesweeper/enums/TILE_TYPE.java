@@ -1,4 +1,4 @@
-package com.yesthisispatrick.games.minesweeper;
+package com.yesthisispatrick.games.minesweeper.enums;
 
 public enum TILE_TYPE {
   EMPTY("."),

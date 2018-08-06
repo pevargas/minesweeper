@@ -1,6 +1,8 @@
-package com.yesthisispatrick.games.minesweeper;
+package com.yesthisispatrick.games.minesweeper.enums;
 
 import static org.junit.Assert.*;
+
+import com.yesthisispatrick.games.minesweeper.enums.TILE_TYPE;
 import org.junit.Test;
 
 public class TileTypeTest {

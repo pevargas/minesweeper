@@ -1,8 +1,10 @@
-package com.yesthisispatrick.games.minesweeper;
+package com.yesthisispatrick.games.minesweeper.models;
 
 import static org.junit.Assert.*;
 
-import com.yesthisispatrick.games.minesweeper.Tile.TileFactory;
+import com.yesthisispatrick.games.minesweeper.models.Board;
+import com.yesthisispatrick.games.minesweeper.models.Tile;
+import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
 import org.junit.Before;
 import org.junit.Test;
 
