@@ -1,4 +1,4 @@
-package com.yesthisispatrick.games.minesweeper.enums;
+package com.yesthisispatrick.games.minesweeper.constants;
 
 public enum COMPASS {
   NORTH(-1, 0),

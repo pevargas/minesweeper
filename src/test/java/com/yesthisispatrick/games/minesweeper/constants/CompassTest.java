@@ -1,8 +1,7 @@
-package com.yesthisispatrick.games.minesweeper.enums;
+package com.yesthisispatrick.games.minesweeper.constants;
 
 import static org.junit.Assert.assertEquals;
 
-import com.yesthisispatrick.games.minesweeper.enums.COMPASS;
 import org.junit.Test;
 
 public class CompassTest {
