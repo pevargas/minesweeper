@@ -10,6 +10,9 @@ import org.junit.Test;
 
 public class BoardTest {
 
+  private static final String TEST_BOARD = "M1........11.111....1111M1....1M1111....11211.111.111M1.1M21M1122112M111.2M2.11111.2M31...M1.12M1...";
+  private static final Integer TEST_WIDTH = 10;
+
   @Before
   public void setup() {
     TileFactory.flush();
@@ -41,6 +44,13 @@ public class BoardTest {
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorMissingOutOfBoundsFrequency() {
     new Board(Board.DEFAULT_HEIGHT, Board.DEFAULT_WIDTH, -1.0);
+  }
+
+  @Test
+  public void testConstructorFromString() {
+    Board board = new Board(TEST_BOARD, TEST_WIDTH);
+    assertEquals(10, board.getHeight());
+    assertEquals(11, TileFactory.getTileTypeCount(TILE_TYPE.MINE));
   }
 
   @Test

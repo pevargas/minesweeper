@@ -39,6 +39,28 @@ public class Board {
   }
 
   /**
+   * Construct a board from a predefined String
+   * @param board a {@link String} representation of the {@link Board}
+   * @param width the width of the {@link Board}
+   */
+  public Board(String board, Integer width) {
+    this.totalTiles = board.length();
+    this.width = width;
+    if (null == this.width) {
+      throw new IllegalArgumentException("Unable to construct a board without dimensions");
+    } else if (2 > this.width) {
+      throw new IllegalArgumentException("Unable to construct a board smaller than 2x2");
+    }
+    this.height = this.totalTiles / this.width;
+    this.board = new ArrayList<>(this.totalTiles);
+    for (int index = 0; index < this.totalTiles; index++) {
+      String cell = String.valueOf(board.charAt(index));
+      TILE_TYPE type = TILE_TYPE.getTileFromValue(cell);
+      this.board.add(TileFactory.getTile(index, type));
+    }
+  }
+
+  /**
    * Construct a {@link Board}
    * @param height the number of rows
    * @param width the number of columns
