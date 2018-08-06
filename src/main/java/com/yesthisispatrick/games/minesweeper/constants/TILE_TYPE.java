@@ -1,4 +1,4 @@
-package com.yesthisispatrick.games.minesweeper.enums;
+package com.yesthisispatrick.games.minesweeper.constants;
 
 public enum TILE_TYPE {
   EMPTY("."),
@@ -17,6 +17,10 @@ public enum TILE_TYPE {
 
   TILE_TYPE(String value) {
     this.value = value;
+  }
+
+  public String getValue() {
+    return value;
   }
 
   public TILE_TYPE increment() {
@@ -40,6 +44,16 @@ public enum TILE_TYPE {
       default:
         return this;
     }
+  }
+
+  public static TILE_TYPE getTileFromValue(String value) {
+    for (TILE_TYPE type : values()) {
+      if (type.getValue().equals(value)) {
+        return type;
+      }
+    }
+
+    return EMPTY;
   }
 
   @Override

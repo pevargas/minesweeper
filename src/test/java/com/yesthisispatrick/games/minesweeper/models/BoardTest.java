@@ -2,8 +2,8 @@ package com.yesthisispatrick.games.minesweeper.models;
 
 import static org.junit.Assert.*;
 
-import com.yesthisispatrick.games.minesweeper.models.Board;
-import com.yesthisispatrick.games.minesweeper.models.Tile;
+import com.yesthisispatrick.games.minesweeper.constants.COMPASS;
+import com.yesthisispatrick.games.minesweeper.constants.TILE_TYPE;
 import com.yesthisispatrick.games.minesweeper.models.Tile.TileFactory;
 import org.junit.Before;
 import org.junit.Test;

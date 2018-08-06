@@ -1,6 +1,6 @@
 package com.yesthisispatrick.games.minesweeper.models;
 
-import com.yesthisispatrick.games.minesweeper.enums.TILE_TYPE;
+import com.yesthisispatrick.games.minesweeper.constants.TILE_TYPE;
 import java.util.ArrayList;
 import java.util.List;
 
